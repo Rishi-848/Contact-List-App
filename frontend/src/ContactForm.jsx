@@ -1,9 +1,11 @@
 import { useState } from "react";
 
-const ContactForm = ({ updateCallback, updating })  =>{
-    const[firstName, setFirstName]=useState("")
-    const[lastName, setLastName]=useState("")
-    const[email, setEmail]=useState("")
+const ContactForm = ({ existingContact = {}, updateCallback }) => {
+    const [firstName, setFirstName] = useState(existingContact.firstName || "");
+    const [lastName, setLastName] = useState(existingContact.lastName || "");
+    const [email, setEmail] = useState(existingContact.email || "");
+
+    const updating = Object.entries(existingContact).length !== 0
 
     const onSubmit =  async(e) =>{
         e.preventDefault()
@@ -13,7 +15,7 @@ const ContactForm = ({ updateCallback, updating })  =>{
             lastName,
             email
         }
-        const url="http://127.0.0.1:5000/create_contact"
+        const url="https://contact-list-app-s0p3.onrender.com/contacts"
         const options={
             method: "POST",
             headers: {
